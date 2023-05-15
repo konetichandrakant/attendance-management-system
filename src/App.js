@@ -1,19 +1,29 @@
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import StudentHomePage from './Components/Student/StudentHomePage'
+import StudentClassPage from './Components/Student/StudentClassPage'
+import TeacherHomePage from './Components/Teacher/TeacherHomePage'
+import TeacherClassPage from './Components/Teacher/TeacherClassPage'
+import TeacherStudentAttendancePage from './Components/Teacher/TeacherStudentAttendancePage'
 import Login from './Components/Login';
 import Register from './Components/Register';
-import Home from './Components/Home';
+import ErrorPage from './Components/ErrorPage'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
+        <Route exact path='/login' element={<Login />} />
+        <Route exact path='/register' element={<Register />} />
+        <Route exact path='/student' element={<StudentHomePage />} />
+        <Route exact path='/student/:courseId' element={<StudentClassPage />} />
+        <Route exact path='/teacher' element={<TeacherHomePage />} />
+        <Route exact path='/teacher/:courseId' element={<TeacherClassPage />} />
+        <Route exact path='/teacher/:courseId/:studentId' element={<TeacherStudentAttendancePage />} />
+        <ErrorPage />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App

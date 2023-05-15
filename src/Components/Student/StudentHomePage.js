@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import Loading from '../Loading';
 import { useNavigate } from 'react-router-dom';
+import React from 'react'
 
-function HomePage() {
+function StudentHomePage() {
   const [details, setDetails] = useState(null);
   const navigate = useNavigate();
 
@@ -10,13 +11,20 @@ function HomePage() {
   // image of teacher and teacher ID (Link format)
 
   useEffect(() => {
-    axios.get('http://localhost:3500',
+    axios.get('http://localhost:3500/student',
       {
-        params: { teacherID: teacherID, courseId: courseId },
+        params: { courseId: courseId },
         headers: { Authorization: localStorage.getItem('jwttoken') }
       }
     )
-      .then((response) => { setDetails(response.data) })
+      .then((response) => {
+        let data = response.data;
+        if (data['studentId'] === null) {
+          navigate('/login');
+        } else {
+          setDetails(data);
+        }
+      })
   }, [])
 
   return (
@@ -73,4 +81,4 @@ function HomePage() {
   )
 }
 
-export default HomePage
+export default StudentHomePage

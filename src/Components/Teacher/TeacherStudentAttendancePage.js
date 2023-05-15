@@ -3,13 +3,10 @@ import Loading from '../Loading';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-function TeacherClassPage() {
-  const { courseId } = useParams();
+function TeacherStudentAttendancePage() {
+  const { courseId, studentId } = useParams();
 
   const [details, setDetails] = useState(null);
-  const [addStudent, setAddStudent] = useState(false);
-  const [addStudentId, setAddStudentId] = useState(null);
-  const [addedSuccessfully, setAddedSuccessfully] = useState(null);
 
   const navigate = useNavigate();
 
@@ -18,7 +15,7 @@ function TeacherClassPage() {
   }
 
   useEffect(() => {
-    axios.get(`http://localhost:3500/teacher/${courseId}`)
+    axios.get(`http://localhost:3500/teacher/${courseId}/${studentId}`)
       .then((response) => {
         let data = response.data;
         if (data['teacherId'] === null) {
@@ -112,4 +109,4 @@ function TeacherClassPage() {
   )
 }
 
-export default TeacherClassPage
+export default TeacherStudentAttendancePage

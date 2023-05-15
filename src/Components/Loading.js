@@ -1,10 +1,9 @@
-import React from 'react';
-import loading_image from '../media/images/loading_image.gif';
+import React from 'react'
 
 function Loading() {
   return (
     <div>
-      <img src={loading_image} />
+      <img src='../../media/images/loading_image.gif' style={{ height: '200px', width: '200px' }} />
     </div>
   )
 }

@@ -8,7 +8,7 @@ function ErrorPage() {
   const clickToHomePage = () => {
     axios.get('/error')
       .then((response) => {
-        navigate(`${response.data['type']}`)
+        navigate(`/${response.data['type']}`)
       })
   }
 

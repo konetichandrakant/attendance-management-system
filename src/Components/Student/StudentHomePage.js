@@ -49,7 +49,7 @@ function StudentHomePage() {
                   return (
                     <div onClick={() => { navigate(`http://localhost:3500/class/${x.courseId}`) }}>
                       <span>
-                        {x.courseName}
+                        {details.listOfClasses[i].courseName}
                       </span>
 
                       <span>
@@ -57,7 +57,7 @@ function StudentHomePage() {
                           Class ID:
                         </span>
                         <span>
-                          {x.courseId}
+                          {details.listOfClasses[i].courseId}
                         </span>
                       </span>
 
@@ -66,7 +66,7 @@ function StudentHomePage() {
                           No Of Classes Taken:
                         </span>
                         <span>
-                          {x.noOfClassesTaken}
+                          {details.listOfClasses[i].noOfClassesTaken}
                         </span>
                       </span>
                     </div>

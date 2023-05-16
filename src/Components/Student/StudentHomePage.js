@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Loading from '../Loading';
-import { useNavigate } from 'react-router-dom';
-import React from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function StudentHomePage() {
   const [details, setDetails] = useState(null);
@@ -13,7 +13,6 @@ function StudentHomePage() {
   useEffect(() => {
     axios.get('http://localhost:3500/student',
       {
-        params: { courseId: courseId },
         headers: { Authorization: localStorage.getItem('jwttoken') }
       }
     )

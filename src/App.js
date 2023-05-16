@@ -8,6 +8,7 @@ import TeacherStudentAttendancePage from './Components/Teacher/TeacherStudentAtt
 import Login from './Components/Login';
 import Register from './Components/Register';
 import ErrorPage from './Components/ErrorPage'
+import LoginRegisterPage from './Components/LoginRegisterPage'
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         <Route exact path='/teacher' element={<TeacherHomePage />} />
         <Route exact path='/teacher/:courseId' element={<TeacherClassPage />} />
         <Route exact path='/teacher/:courseId/:studentId' element={<TeacherStudentAttendancePage />} />
-        <ErrorPage />
+        <Route exact path='/' element={<LoginRegisterPage />} />
       </Routes>
     </BrowserRouter>
   )

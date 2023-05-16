@@ -11,9 +11,9 @@ function Login() {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [validUserid, setValidUserid] = useState('');
-  const [validPassword, setValidPassword] = useState('');
-  const [isValid, setIsValid] = useState(false);
+  const [validUserid, setValidUserid] = useState(null);
+  const [validPassword, setValidPassword] = useState(null);
+  const [isValid, setIsValid] = useState(null);
 
   useEffect(() => {
     setValidUserid(validateUsername(userId) !== null && "** Invalid userid **");
@@ -30,11 +30,17 @@ function Login() {
   }, [isValid])
 
   const teacherLoginDetails = () => {
-    axios.post('http://localhost:3500/login')
+    axios.post('http://localhost:3500/login'
+      , {
+        userId: userId,
+        password: password,
+        type: 'teacher',
+      })
       .then(
         (response) => {
           const data = response.data;
-          if (data.valid) {
+          console.log(data);
+          if (data['valid']) {
             localStorage.setItem('token', data.token);
             setIsValid(true);
           } else {
@@ -50,15 +56,27 @@ function Login() {
   }
 
   const studentLoginDetails = () => {
-    axios.post('http://localhost:3500/login')
+    axios.post('http://localhost:3500/login'
+      , {
+        userId: userId,
+        password: password,
+        type: 'student',
+      })
       .then(
         (response) => {
-          setIsValid(response.data.valid);
+          const data = response.data;
+          console.log(data);
+          if (data['valid']) {
+            localStorage.setItem('token', data.token);
+            setIsValid(true);
+          } else {
+            setIsValid(false);
+          }
         }
       )
       .catch(
         (error) => {
-          setIsValid(error.message);
+          setIsValid(false);
         }
       );
   }
@@ -81,7 +99,7 @@ function Login() {
           </div>
 
           {
-            validUserid === false &&
+            !validUserid &&
             (
               <div>
                 <text style={{ color: 'red' }}>
@@ -114,6 +132,17 @@ function Login() {
               }
             </span>
           </div>
+
+          {
+            !validPassword &&
+            (
+              <div>
+                <text style={{ color: 'red' }}>
+                  ** Invalid password **
+                </text>
+              </div>
+            )
+          }
 
           <div className='button-div'>
             <button className='cursor-pointer login-button' onClick={isTeacher ? teacherLoginDetails : studentLoginDetails} type='button'>

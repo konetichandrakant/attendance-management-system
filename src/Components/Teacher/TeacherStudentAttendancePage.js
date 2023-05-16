@@ -6,6 +6,8 @@ import axios from 'axios';
 function TeacherStudentAttendancePage() {
   const { courseId, studentId } = useParams();
 
+  const [addStudentId, setAddStudentId] = useState(null);
+  const [addStudent, setAddStudent] = useState(false);
   const [details, setDetails] = useState(null);
 
   const navigate = useNavigate();

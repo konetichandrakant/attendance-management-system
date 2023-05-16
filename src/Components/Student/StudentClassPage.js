@@ -1,6 +1,10 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import Loading from '../Loading';
 
 function StudentClassPage() {
+  const { courseId } = useParams();
   const [details, setDetails] = useState(null);
   const navigate = useNavigate();
 
@@ -10,13 +14,13 @@ function StudentClassPage() {
   useEffect(() => {
     axios.get('http://localhost:3500/student',
       {
-        params: { teacherID: teacherID, courseId: courseId },
+        params: { courseId: courseId },
         headers: { Authorization: localStorage.getItem('jwttoken') }
       }
     )
       .then((response) => {
         let data = response.data;
-        if (data['studentId'] === null) {
+        if (data['type'] !== 'student') {
           navigate('/login');
         } else {
           setDetails(data);
@@ -45,27 +49,36 @@ function StudentClassPage() {
                 details.listOfClasses.map((x, i) => {
                   return (
                     <div onClick={() => { navigate(`http://localhost:3500/class/${x.courseId}`) }}>
-                      <span>
-                        {x.courseName}
-                      </span>
+                      <div>
+                        {details.listOfClasses[i].courseName}
+                      </div>
 
-                      <span>
+                      <div>
                         <span>
                           Class ID:
                         </span>
                         <span>
-                          {x.courseId}
+                          {details.listOfClasses[i].courseId}
                         </span>
-                      </span>
+                      </div>
 
-                      <span>
+                      <div>
                         <span>
                           No Of Classes Taken:
                         </span>
                         <span>
-                          {x.noOfClassesTaken}
+                          {details.listOfClasses[i].noOfClassesTaken}
                         </span>
-                      </span>
+                      </div>
+
+                      <div>
+                        <span>
+                          No Of Classes Taken:
+                        </span>
+                        <span>
+                          {details.listOfClasses[i].noOfClassesTaken}
+                        </span>
+                      </div>
                     </div>
                   )
                 })

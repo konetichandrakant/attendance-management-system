@@ -29,7 +29,16 @@ function TeacherClassPage() {
       });
   }, [])
 
-  useEffect(() => { }, [])
+  const addStud = (studentId) => {
+    axios.post('/teacher/addStudent', { studentId: studentId, courseId: courseId })
+      .then((response) => {
+        const valid = response.data;
+        if (valid) {
+
+        }
+        setAddedSuccessfully(valid);
+      })
+  }
 
   return (
     <>
@@ -55,10 +64,6 @@ function TeacherClassPage() {
               addStudent && (
                 <div className='flex-row'>
                   <div>
-                    <img />
-                  </div>
-
-                  <div>
                     <span>
                       Student ID:
                     </span>
@@ -68,8 +73,16 @@ function TeacherClassPage() {
                   </div>
 
                   <div>
-                    <button onClick={() => { }}>Add Student</button>
+                    <button onClick={() => { addStud() }}>Add Student</button>
                   </div>
+                </div>
+              )
+            }
+
+            {
+              addedSuccessfully && (
+                <div>
+                  Added Successfully
                 </div>
               )
             }
@@ -86,7 +99,7 @@ function TeacherClassPage() {
                 details.students.map((x, i) => {
                   return (
                     <div onClick={() => {
-                      navigate(`/student/${courseId}/${details.studentId}`)
+                      navigate(`/teacher/${courseId}/${details.studentId}`)
                     }}
                       className='flex-row'>
                       <span>{i + 1}</span>

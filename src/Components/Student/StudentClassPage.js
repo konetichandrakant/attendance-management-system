@@ -17,15 +17,14 @@ function StudentClassPage() {
         params: { courseId: courseId },
         headers: { Authorization: localStorage.getItem('jwttoken') }
       }
-    )
-      .then((response) => {
-        let data = response.data;
-        if (data['type'] !== 'student') {
-          navigate('/login');
-        } else {
-          setDetails(data);
-        }
-      })
+    ).then((response) => {
+      let data = response.data;
+      if (data['student'] === null) {
+        navigate('/login');
+      } else {
+        setDetails(data);
+      }
+    })
   }, [])
 
   return (
@@ -43,47 +42,62 @@ function StudentClassPage() {
               <Link to={`/teacher/${details.teacherID}`}>{details.teacherID}</Link>
             </div>
             {/* Here i consider classname classId and no of classes taken*/}
-            <div>
-              {
+            <div className='card'>
+              <div className='course-details-box'>
+                <div>
+                  Course Details:
+                </div>
 
-                details.listOfClasses.map((x, i) => {
-                  return (
-                    <div onClick={() => { navigate(`http://localhost:3500/class/${x.courseId}`) }}>
-                      <div>
-                        {details.listOfClasses[i].courseName}
-                      </div>
+                <div>
+                  <span>
+                    Course ID:
+                  </span>
+                  <span>
+                    {
+                      details['courseId']
+                    }
+                  </span>
+                </div>
 
-                      <div>
-                        <span>
-                          Class ID:
-                        </span>
-                        <span>
-                          {details.listOfClasses[i].courseId}
-                        </span>
-                      </div>
+                <div>
+                  <span>
+                    Course Name:
+                  </span>
+                  <span>
+                    {
+                      details['courseName']
+                    }
+                  </span>
+                </div>
 
-                      <div>
-                        <span>
-                          No Of Classes Taken:
-                        </span>
-                        <span>
-                          {details.listOfClasses[i].noOfClassesTaken}
-                        </span>
-                      </div>
+                <div>
+                  <span>
+                    Teacher ID:
+                  </span>
+                  <span>
+                    {
+                      details['teacherId']
+                    }
+                  </span>
+                </div>
 
-                      <div>
-                        <span>
-                          No Of Classes Taken:
-                        </span>
-                        <span>
-                          {details.listOfClasses[i].noOfClassesTaken}
-                        </span>
-                      </div>
-                    </div>
-                  )
-                })
-              }
+                <div>
+                  <span>
+                    Teacher Name:
+                  </span>
+                  <span>
+                    {
+                      details['teacherName']
+                    }
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                
+              </div>
             </div>
+
           </div>
         )
       }

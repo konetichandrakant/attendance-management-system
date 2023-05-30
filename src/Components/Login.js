@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../views/Login.css';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { validatePassword, validateUsername } from '../Validations/validate'
 
 function Login() {
@@ -23,11 +22,9 @@ function Login() {
     setValidPassword(validatePassword(password) !== null && "** Invalid password **");
   }, [password]);
 
-  useEffect(() => {
-    if (isValid) {
-      navigate("/");
-    }
-  }, [isValid])
+  const homePage = () => {
+    navigate("/");
+  }
 
   const teacherLoginDetails = () => {
     axios.post('http://localhost:3500/login'

@@ -32,7 +32,7 @@ function TeacherStudentAttendancePage() {
 
   return (
     <>
-      {
+      {/* {
         details && (
           <div>
             <div className='flex-row'>
@@ -104,6 +104,79 @@ function TeacherStudentAttendancePage() {
       {
         !details && (
           <Loading />
+        )
+      } */}
+
+      {
+        details === null && (
+          <Loading />
+        )
+      }
+
+      {
+        details && (
+          <div className=''>
+            <div>
+              <Link to={`/teacher-details/${details.teacherID}`}>{details.teacherID}</Link>
+            </div>
+            {/* Here i consider classname classId and no of classes taken*/}
+            <div className='card'>
+              <div className='course-details-box'>
+                <div>
+                  Course Details:
+                </div>
+
+                <div>
+                  <span>
+                    Course ID:
+                  </span>
+                  <span>
+                    {
+                      details['courseId']
+                    }
+                  </span>
+                </div>
+
+                <div>
+                  <span>
+                    Course Name:
+                  </span>
+                  <span>
+                    {
+                      details['courseName']
+                    }
+                  </span>
+                </div>
+
+                <div>
+                  <span>
+                    Teacher ID:
+                  </span>
+                  <span>
+                    {
+                      details['teacherId']
+                    }
+                  </span>
+                </div>
+
+                <div>
+                  <span>
+                    Teacher Name:
+                  </span>
+                  <span>
+                    {
+                      details['teacherName']
+                    }
+                  </span>
+                </div>
+              </div>
+
+              <div>
+
+              </div>
+            </div>
+
+          </div>
         )
       }
 

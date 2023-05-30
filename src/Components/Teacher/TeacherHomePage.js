@@ -15,15 +15,14 @@ function TeacherHomePage() {
       {
         headers: { Authorization: localStorage.getItem('jwttoken') }
       }
-    )
-      .then((response) => {
-        let data = response.data;
-        if (data['teacherId'] === null) {
-          navigate('/login');
-        } else {
-          setDetails(data);
-        }
-      })
+    ).then((response) => {
+      let data = response.data;
+      if (data['teacherId'] === null) {
+        navigate('/login');
+      } else {
+        setDetails(data);
+      }
+    })
   }, [])
 
   return (
@@ -45,7 +44,7 @@ function TeacherHomePage() {
               {
                 details.listOfClasses.map((x, i) => {
                   return (
-                    <div onClick={() => { navigate(`http://localhost:3500/teacher/${x.courseId}`) }}>
+                    <div onClick={() => { navigate(`http://localhost:3500/teacher/${details.listOfClasses[i].courseId}`) }}>
                       <div>
                         {details.listOfClasses[i].courseName}
                       </div>
@@ -58,19 +57,14 @@ function TeacherHomePage() {
                           {details.listOfClasses[i].courseId}
                         </span>
                       </div>
-
-                      <div>
-                        <span>
-                          Classes Taken:
-                        </span>
-                        <span>
-                          {details.listOfClasses[i].noOfClassesTaken}
-                        </span>
-                      </div>
                     </div>
                   )
                 })
               }
+            </div>
+
+            <div>
+              click for above classes for more details
             </div>
           </div>
         )

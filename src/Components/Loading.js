@@ -2,8 +2,13 @@ import React from 'react'
 
 function Loading() {
   return (
-    <div>
-      <img src='../../media/images/loading_image.gif' style={{ height: '200px', width: '200px' }} />
+    <div style={{ display: 'flex' }}>
+      <div>
+        <img src='../../media/images/loading_image.gif' style={{ height: '10vh', width: '10vh' }} />
+      </div>
+      <div>
+        Loading please wait...
+      </div>
     </div>
   )
 }

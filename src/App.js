@@ -6,9 +6,6 @@ import TeacherHomePage from './Components/Teacher/TeacherHomePage'
 import TeacherClassPage from './Components/Teacher/TeacherClassPage'
 import TeacherStudentAttendancePage from './Components/Teacher/TeacherStudentAttendancePage'
 import Login from './Components/Login';
-import Register from './Components/Register';
-import ErrorPage from './Components/ErrorPage'
-import LoginRegisterPage from './Components/LoginRegisterPage'
 import PageDoesNotExsist from './Components/PageDoesNotExsist'
 
 function App() {

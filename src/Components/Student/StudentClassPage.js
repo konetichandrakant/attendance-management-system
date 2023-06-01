@@ -2,24 +2,29 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Loading from '../Loading';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function StudentClassPage() {
   const { courseId } = useParams();
+  console.log(courseId);
   const [details, setDetails] = useState(null);
   const navigate = useNavigate();
+
+  console.log(details)
 
   // This page details should contain-
   // image of teacher and teacher ID (Link format)
 
   useEffect(() => {
-    axios.get('http://localhost:3500/student',
+    console.log(localStorage.getItem('token'))
+    axios.get(`http://localhost:3500/student/${courseId}`,
       {
         params: { courseId: courseId },
-        headers: { Authorization: localStorage.getItem('jwttoken') }
+        headers: { Authorization: localStorage.getItem('token') }
       }
     ).then((response) => {
       let data = response.data;
-      if (data['student'] === null) {
+      if (data['studentId'] === null) {
         navigate('/login');
       } else {
         setDetails(data);
@@ -38,9 +43,6 @@ function StudentClassPage() {
       {
         details && (
           <div className=''>
-            <div>
-              <Link to={`/teacher/${details.teacherID}`}>{details.teacherID}</Link>
-            </div>
             {/* Here i consider classname classId and no of classes taken*/}
             <div className='card'>
               <div className='course-details-box'>
@@ -94,7 +96,7 @@ function StudentClassPage() {
               </div>
 
               <div>
-                
+
               </div>
             </div>
 

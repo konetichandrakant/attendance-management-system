@@ -2,13 +2,13 @@ import React from 'react'
 
 function Loading() {
   return (
-    <div style={{ display: 'flex' }}>
-      <div>
-        <img src='../../media/images/loading_image.gif' style={{ height: '10vh', width: '10vh' }} />
+    <div style={{ height: '100vh', width: '100vw', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
       </div>
-      <div>
+      <span>
         Loading please wait...
-      </div>
+      </span>
     </div>
   )
 }

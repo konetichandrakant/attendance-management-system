@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import Loading from '../Loading';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function TeacherStudentAttendancePage() {
   const { courseId, studentId } = useParams();
 
-  const [addStudentId, setAddStudentId] = useState(null);
-  const [addStudent, setAddStudent] = useState(false);
+  let j = 0;
   const [details, setDetails] = useState(null);
 
   const navigate = useNavigate();
@@ -17,7 +17,9 @@ function TeacherStudentAttendancePage() {
   }
 
   useEffect(() => {
-    axios.get(`http://localhost:3500/teacher/${courseId}/${studentId}`)
+    axios.get(`http://localhost:3500/teacher/${courseId}/${studentId}`, {
+      headers: { Authorization: localStorage.getItem('token') }
+    })
       .then((response) => {
         let data = response.data;
         if (data['teacherId'] === null) {
@@ -32,81 +34,6 @@ function TeacherStudentAttendancePage() {
 
   return (
     <>
-      {/* {
-        details && (
-          <div>
-            <div className='flex-row'>
-              <div className='flex-row'>
-                <span>No.of Classes Taken: </span>
-                <span>{details.classesTaken}</span>
-              </div>
-
-              {
-                !addStudent && (
-                  <div>
-                    <button onClick={() => { setAddStudent(prev => !prev) }}>Add Student</button>
-                  </div>
-                )
-              }
-            </div>
-
-            {
-              addStudent && (
-                <div className='flex-row'>
-                  <div>
-                    <img />
-                  </div>
-
-                  <div>
-                    <span>
-                      Student ID:
-                    </span>
-                    <span>
-                      <input onChange={(e) => { setAddStudentId(e.target.value) }} value={addStudentId} />
-                    </span>
-                  </div>
-
-                  <div>
-                    <button onClick={() => { }}>Add Student</button>
-                  </div>
-                </div>
-              )
-            }
-
-            <div>
-              <div className='flex-row'>
-                <span>SL no.</span>
-                <span>Name</span>
-                <span>Roll Number</span>
-                <span>Attendance</span>
-              </div>
-
-              {
-                details.students.map((x, i) => {
-                  return (
-                    <div onClick={() => {
-                      navigate(`/student/${courseId}/${details.studentId}`)
-                    }}
-                      className='flex-row'>
-                      <span>{i + 1}</span>
-                      <span>{details.students[i].name}</span>
-                      <span>{details.students[i].studentId}</span>
-                      <span>{`${details.students[i].noOfPresent} | ${getPercentage(details.students[i].noOfPresent, details.classesTaken)}`}</span>
-                    </div>
-                  )
-                })
-              }
-            </div>
-
-          </div>
-        )
-      }
-      {
-        !details && (
-          <Loading />
-        )
-      } */}
-
       {
         details === null && (
           <Loading />
@@ -115,68 +42,90 @@ function TeacherStudentAttendancePage() {
 
       {
         details && (
-          <div className=''>
-            <div>
-              <Link to={`/teacher-details/${details.teacherID}`}>{details.teacherID}</Link>
-            </div>
-            {/* Here i consider classname classId and no of classes taken*/}
-            <div className='card'>
-              <div className='course-details-box'>
-                <div>
-                  Course Details:
+          <>
+            <div class='card d-flex flex-column bd-highlight justify-content-center'>
+              <div class='p-2 bd-highlight d-flex flex-column justify-content-center'>
+                <div class='p-1 bd-highlight d-flex justify-content-center'>
+                  <h3 class='card-title'>
+                    Course Details
+                  </h3>
                 </div>
 
-                <div>
-                  <span>
-                    Course ID:
-                  </span>
-                  <span>
-                    {
-                      details['courseId']
-                    }
-                  </span>
+                <div class='p-1 bd-highlight d-flex justify-content-center'>
+                  <div>
+                    <h6 class="card-subtitle mb-2 text-muted" style={{ margin: '0px', border: '0px', padding: '2px' }}>
+                      <b>
+                        Course ID:
+                      </b>
+                    </h6>
+                  </div>
+                  <div>
+                    <p class="card-text" style={{ margin: '0px', border: '0px', padding: '0px' }}>&nbsp;{details['courseId']}</p>
+                  </div>
                 </div>
 
-                <div>
-                  <span>
-                    Course Name:
-                  </span>
-                  <span>
-                    {
-                      details['courseName']
-                    }
-                  </span>
+                <div class='p-1 bd-highlight d-flex justify-content-center'>
+                  <div>
+                    <h6 class="card-subtitle mb-2 text-muted" style={{ margin: '0px', border: '0px', padding: '2px' }}>
+                      <b>
+                        Course Name:
+                      </b>
+                    </h6>
+                  </div>
+                  <div>
+                    <p class="card-text" style={{ margin: '0px', border: '0px', padding: '0px' }}>&nbsp;{details['courseName']}</p>
+                  </div>
                 </div>
 
-                <div>
-                  <span>
-                    Teacher ID:
-                  </span>
-                  <span>
-                    {
-                      details['teacherId']
-                    }
-                  </span>
+                <div class='p-1 bd-highlight d-flex justify-content-center'>
+                  <div>
+                    <h6 class="card-subtitle mb-2 text-muted" style={{ margin: '0px', border: '0px', padding: '2px' }}>
+                      <b>
+                        Student ID:
+                      </b>
+                    </h6>
+                  </div>
+                  <div>
+                    <p class="card-text" style={{ margin: '0px', border: '0px', padding: '0px' }}>&nbsp;{details['studentId']}</p>
+                  </div>
                 </div>
 
-                <div>
-                  <span>
-                    Teacher Name:
-                  </span>
-                  <span>
-                    {
-                      details['teacherName']
-                    }
-                  </span>
+                <div class='p-1 bd-highlight d-flex justify-content-center'>
+                  <div>
+                    <h6 class="card-subtitle mb-2 text-muted" style={{ margin: '0px', border: '0px', padding: '2px' }}>
+                      <b>
+                        Student Name:
+                      </b>
+                    </h6>
+                  </div>
+                  <div>
+                    <p class="card-text" style={{ margin: '0px', border: '0px', padding: '0px' }}>&nbsp;{details['studentName']}</p>
+                  </div>
                 </div>
               </div>
-
-              <div>
-
-              </div>
             </div>
 
-          </div>
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Attendance Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  details['teacherAttendance'].map((x, i) => {
+                    <tr>
+                      <th scope="row">{i + 1}</th>
+                      <td>{details['teacherAttendance'][i]}</td>
+                      <td>{details['teacherAttendance'][i]}</td>
+                    </tr>
+                  })
+                }
+              </tbody>
+            </table>
+          </>
         )
       }
 

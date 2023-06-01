@@ -14,6 +14,8 @@ function Login() {
   const [validPassword, setValidPassword] = useState(null);
   const [isValid, setIsValid] = useState(null);
 
+  console.log(userId);
+
   useEffect(() => {
     setValidUserid(validateUsername(userId) !== null && "** Invalid userid **");
   }, [userId]);
@@ -21,10 +23,6 @@ function Login() {
   useEffect(() => {
     setValidPassword(validatePassword(password) !== null && "** Invalid password **");
   }, [password]);
-
-  const homePage = () => {
-    navigate("/");
-  }
 
   const teacherLoginDetails = () => {
     axios.post('http://localhost:3500/login'
@@ -36,23 +34,23 @@ function Login() {
       .then(
         (response) => {
           const data = response.data;
-          console.log(data);
-          if (data['valid']) {
+          if (data['token'] !== null) {
             localStorage.setItem('token', data.token);
-            setIsValid(true);
+            isTeacher ? navigate('/teacher') : navigate('/student');
           } else {
             setIsValid(false);
           }
         }
       )
       .catch(
-        (error) => {
+        () => {
           setIsValid(false);
         }
       );
   }
 
   const studentLoginDetails = () => {
+    console.log(userId);
     axios.post('http://localhost:3500/login'
       , {
         userId: userId,
@@ -63,9 +61,9 @@ function Login() {
         (response) => {
           const data = response.data;
           console.log(data);
-          if (data['valid']) {
+          if (data['token'] !== null) {
             localStorage.setItem('token', data.token);
-            setIsValid(true);
+            isTeacher ? navigate('/teacher') : navigate('/student');
           } else {
             setIsValid(false);
           }
@@ -142,7 +140,7 @@ function Login() {
           }
 
           <div className='button-div'>
-            <button className='cursor-pointer login-button' onClick={isTeacher ? teacherLoginDetails : studentLoginDetails} type='button'>
+            <button className='cursor-pointer login-button' onClick={() => { isTeacher ? teacherLoginDetails() : studentLoginDetails() }} type='button'>
               {
                 <span>
                   {isTeacher ? 'TEACHER LOGIN' : 'STUDENT LOGIN'}
@@ -157,6 +155,14 @@ function Login() {
                 <br />
                 ** Invalid Username or Password **
               </text>
+            )
+          }
+
+          {
+            isValid === true && (
+              <div>
+                Successful login
+              </div>
             )
           }
         </div>

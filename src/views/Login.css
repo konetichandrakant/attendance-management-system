@@ -14,7 +14,7 @@
   align-items: center;
 }
 
-.header-button{
+.header-button {
   font-size: 20px;
 }
 
@@ -30,8 +30,8 @@
 }
 
 .login {
-  min-width: auto;
-  width: 300px;
+  min-width: 310px;
+  width: auto;
 }
 
 .button-div {
@@ -47,9 +47,12 @@
 }
 
 .login-center {
-  display: flex;
+  background-image: url('../media/images/amrita.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
   width: 100vw;
   height: 100vh;
+  display: flex;
   align-items: center;
   justify-content: center;
 }

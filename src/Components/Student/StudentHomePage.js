@@ -1,30 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import Loading from '../Loading';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import ErrorPage from '../ErrorPage';
 
 function StudentHomePage() {
   const [details, setDetails] = useState(null);
   const navigate = useNavigate();
-  console.log('student');
-
-  // <i class="bi bi-arrow-right-circle"></i>
-  // <i class="bi bi-arrow-right-circle-fill"></i>
-
-  // This page details should contain-
-  // image of stduent and student ID (Link format)
 
   useEffect(() => {
-    console.log(localStorage.getItem('token'));
     axios.get('http://localhost:3500/student',
       { headers: { Authorization: localStorage.getItem('token') } })
       .then((response) => {
-        console.log(response);
         let data = response.data;
         if (data['studentId'] === null) {
           navigate('/login');
         } else {
           setDetails(data);
+          console.log(data);
         }
       })
   }, [])
@@ -38,26 +31,25 @@ function StudentHomePage() {
       }
 
       {
-        details && (
-          <div className=''>
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px' }}>
-              <span>
-                welcome {details.studentId}
-              </span>
-            </div>
-            {/* Here i consider classname classId and no of classes taken*/}
-            <div>
+        details && details.valid === false && (
+          <ErrorPage userType={details.type} />
+        )
+      }
+
+      {
+        details && details['valid'] !== false && (
+          <div class='d-flex flex-column bd-highlight justify-content-center'>
+            <div class='card d-flex flex-column bd-highlight justify-content-center' style={{ margin: '10px' }}>
               {
                 details.courses.map((x, i) => {
                   return (
-                    <div onClick={() => { navigate(`/student/${details.courses[i]}`) }} className='courses'>
+                    <div class='d-flex flex-row bd-highlight justify-content-center hover-effect' onClick={() => { navigate(`/student/${details.courses[i]}`) }}>
                       <div>
-                        <span>
-                          Class ID:
-                        </span>
-                        <span>
-                          {details.courses[i]}
-                        </span>
+                        <b style={{ color: 'blue' }}>Course ID:</b>
+                      </div>
+                      <div>
+                        &nbsp;
+                        <b>{details.courses[i]}</b>
                       </div>
                     </div>
                   )
@@ -65,8 +57,10 @@ function StudentHomePage() {
               }
             </div>
 
-            <div>
-              click for above classes for more details
+            <div class='d-flex flex-row bd-highlight justify-content-center'>
+              <text style={{ color: 'red' }}>
+                ** click for above classes for more details **
+              </text>
             </div>
           </div>
         )

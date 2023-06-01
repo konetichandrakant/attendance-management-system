@@ -3,8 +3,8 @@ import Loading from '../Loading';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
-import Header from '../Header';
 import '../../views/Common.css';
+import ErrorPage from '../ErrorPage';
 
 function TeacherClassPage() {
   const { courseId } = useParams();
@@ -47,7 +47,13 @@ function TeacherClassPage() {
   return (
     <>
       {
-        details && (
+        details && details.valid === false && (
+          <ErrorPage userType={details.type} />
+        )
+      }
+
+      {
+        details && details['valid'] !== false && (
           <div>
             <div class='d-flex flex-column bd-highlight justify-content-center align-items-center'>
               <div class='d-flex flex-row bd-highlight justify-content-center'>
@@ -136,6 +142,7 @@ function TeacherClassPage() {
           </div>
         )
       }
+
       {
         !details && (
           <Loading />

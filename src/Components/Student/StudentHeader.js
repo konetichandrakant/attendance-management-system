@@ -1,8 +1,10 @@
 import React from 'react'
 
-function StudentHeader() {
+function StudentHeader(props) {
   return (
-    <div>StudentHeader</div>
+    <div>
+      
+    </div>
   )
 }
 

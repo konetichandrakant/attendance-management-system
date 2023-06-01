@@ -6,3 +6,7 @@
 .hover-effect-cursor:hover {
   cursor: pointer;
 }
+
+.hover:hover {
+  cursor: pointer;
+}

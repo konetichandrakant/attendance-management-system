@@ -3,6 +3,7 @@ import Loading from '../Loading';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
+import ErrorPage from '../ErrorPage';
 
 function TeacherStudentAttendancePage() {
   const { courseId, studentId } = useParams();
@@ -41,7 +42,13 @@ function TeacherStudentAttendancePage() {
       }
 
       {
-        details && (
+        details && details.valid === false && (
+          <ErrorPage userType={details.type} />
+        )
+      }
+
+      {
+        details && details['valid'] !== false && (
           <>
             <div class='card d-flex flex-column bd-highlight justify-content-center'>
               <div class='p-2 bd-highlight d-flex flex-column justify-content-center'>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Loading from '../Loading';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../../views/Common.css'
-import Header from '../Header';
+import ErrorPage from '../ErrorPage';
 
 function TeacherHomePage() {
   const [details, setDetails] = useState(null);
@@ -56,7 +56,13 @@ function TeacherHomePage() {
       }
 
       {
-        details && (
+        details && details.valid === false && (
+          <ErrorPage userType={details.type} />
+        )
+      }
+
+      {
+        details && details['valid'] !== false && (
           <div class='d-flex flex-column bd-highlight justify-content-center'>
             {
               !addCourse && (

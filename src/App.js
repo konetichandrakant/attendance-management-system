@@ -9,21 +9,24 @@ import Login from './Components/Login';
 import Register from './Components/Register';
 import ErrorPage from './Components/ErrorPage'
 import LoginRegisterPage from './Components/LoginRegisterPage'
+import PageDoesNotExsist from './Components/PageDoesNotExsist'
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route exact path='/login' element={<Login />} />
-        <Route exact path='/register' element={<Register />} />
-        <Route exact path='/student' element={<StudentHomePage />} />
-        <Route exact path='/student/:courseId' element={<StudentClassPage />} />
-        <Route exact path='/teacher' element={<TeacherHomePage />} />
-        <Route exact path='/teacher/:courseId' element={<TeacherClassPage />} />
-        <Route exact path='/teacher/:courseId/:studentId' element={<TeacherStudentAttendancePage />} />
-        <Route exact path='/' element={<LoginRegisterPage />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route exact path='/' element={<Login />} />
+          {/* <Route exact path='/register' element={<Register />} /> */}
+          <Route exact path='/student' element={<StudentHomePage />} />
+          <Route exact path='/student/:courseId' element={<StudentClassPage />} />
+          <Route exact path='/teacher' element={<TeacherHomePage />} />
+          <Route exact path='/teacher/:courseId' element={<TeacherClassPage />} />
+          <Route exact path='/teacher/:courseId/:studentId' element={<TeacherStudentAttendancePage />} />
+          <Route path='*' element={<PageDoesNotExsist />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   )
 }
 
